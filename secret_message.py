@@ -122,6 +122,7 @@ def main():
             else:
                 encoded = encode_message(message)
                 print("Secret code: " + encoded)
+                print()
         elif choice == "2":
             code = read_input("Enter secret code to decode: ")
             if code is None:
@@ -133,6 +134,7 @@ def main():
             else:
                 decoded = decode_message(code)
                 print("Original message: " + decoded)
+                print()
         elif choice == "3":
             password = read_input("Enter password to check: ")
             if password is None:
@@ -148,6 +150,7 @@ def main():
                         print("- " + item)
                 else:
                     print("All requirements are met")
+                print()
         else:
             print("Invalid choice please try again")
 
