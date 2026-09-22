@@ -40,6 +40,39 @@ def decode_message(message):
     return result
 
 
+def check_password_strength(password):
+    score = 0
+    has_upper = False
+    has_lower = False
+    has_number = False
+    has_special = False
+    for ch in password:
+        if "A" <= ch <= "Z":
+            has_upper = True
+        elif "a" <= ch <= "z":
+            has_lower = True
+        elif "0" <= ch <= "9":
+            has_number = True
+        elif ch in "!@#$%^&*?":
+            has_special = True
+    if len(password) >= 8:
+        score = score + 1
+    if has_upper:
+        score = score + 1
+    if has_lower:
+        score = score + 1
+    if has_number:
+        score = score + 1
+    if has_special:
+        score = score + 1
+    if score >= 5:
+        return "STRONG"
+    elif score >= 3:
+        return "MEDIUM"
+    else:
+        return "WEAK"
+
+
 def main():
     while True:
         show_menu()
@@ -62,7 +95,12 @@ def main():
                 decoded = decode_message(code)
                 print("Original message: " + decoded)
         elif choice == "3":
-            print("Coming soon")
+            password = input("Enter password to check: ")
+            if password == "":
+                print("Password cannot be empty")
+            else:
+                strength = check_password_strength(password)
+                print("Password strength: " + strength)
         else:
             print("Invalid choice please try again")
 
