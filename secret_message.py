@@ -15,7 +15,9 @@ def show_menu():
 def encode_message(message):
     result = ""
     for ch in message:
-        if ch in CHARSET:
+        if ch == " ":
+            result = result + " "
+        elif ch in CHARSET:
             index = CHARSET.find(ch)
             new_index = (index + SHIFT) % len(CHARSET)
             result = result + CHARSET[new_index]
@@ -27,7 +29,9 @@ def encode_message(message):
 def decode_message(message):
     result = ""
     for ch in message:
-        if ch in CHARSET:
+        if ch == " ":
+            result = result + " "
+        elif ch in CHARSET:
             index = CHARSET.find(ch)
             new_index = (index - SHIFT) % len(CHARSET)
             result = result + CHARSET[new_index]
