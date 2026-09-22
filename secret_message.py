@@ -85,29 +85,58 @@ def check_password_strength(password):
     return strength, missing
 
 
+def read_input(prompt):
+    try:
+        return input(prompt)
+    except EOFError:
+        print()
+        return ""
+    except KeyboardInterrupt:
+        print()
+        print("Goodbye")
+        return None
+
+
+def is_valid_encoded_text(text):
+    for ch in text:
+        if ch != " " and ch not in CHARSET:
+            return False
+    return True
+
+
 def main():
     while True:
         show_menu()
-        choice = input("Enter your choice: ")
+        choice = read_input("Enter your choice: ")
+        if choice is None:
+            break
         if choice == "4":
             print("Goodbye")
             break
         elif choice == "1":
-            message = input("Enter message to encode: ")
+            message = read_input("Enter message to encode: ")
+            if message is None:
+                break
             if message == "":
                 print("Message cannot be empty")
             else:
                 encoded = encode_message(message)
                 print("Secret code: " + encoded)
         elif choice == "2":
-            code = input("Enter secret code to decode: ")
+            code = read_input("Enter secret code to decode: ")
+            if code is None:
+                break
             if code == "":
                 print("Secret code cannot be empty")
+            elif not is_valid_encoded_text(code):
+                print("Invalid encoded input please check your secret code")
             else:
                 decoded = decode_message(code)
                 print("Original message: " + decoded)
         elif choice == "3":
-            password = input("Enter password to check: ")
+            password = read_input("Enter password to check: ")
+            if password is None:
+                break
             if password == "":
                 print("Password cannot be empty")
             else:
