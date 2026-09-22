@@ -1,3 +1,7 @@
+CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*?"
+SHIFT = 7
+
+
 def show_menu():
     print()
     print("Secret Message Security Tool")
@@ -8,6 +12,18 @@ def show_menu():
     print()
 
 
+def encode_message(message):
+    result = ""
+    for ch in message:
+        if ch in CHARSET:
+            index = CHARSET.find(ch)
+            new_index = (index + SHIFT) % len(CHARSET)
+            result = result + CHARSET[new_index]
+        else:
+            result = result + ch
+    return result
+
+
 def main():
     while True:
         show_menu()
@@ -15,7 +31,16 @@ def main():
         if choice == "4":
             print("Goodbye")
             break
-        elif choice in ("1", "2", "3"):
+        elif choice == "1":
+            message = input("Enter message to encode: ")
+            if message == "":
+                print("Message cannot be empty")
+            else:
+                encoded = encode_message(message)
+                print("Secret code: " + encoded)
+        elif choice == "2":
+            print("Coming soon")
+        elif choice == "3":
             print("Coming soon")
         else:
             print("Invalid choice please try again")
