@@ -55,22 +55,34 @@ def check_password_strength(password):
             has_number = True
         elif ch in "!@#$%^&*?":
             has_special = True
+    missing = []
     if len(password) >= 8:
         score = score + 1
+    else:
+        missing.append("minimum length 8")
     if has_upper:
         score = score + 1
+    else:
+        missing.append("uppercase letter")
     if has_lower:
         score = score + 1
+    else:
+        missing.append("lowercase letter")
     if has_number:
         score = score + 1
+    else:
+        missing.append("number")
     if has_special:
         score = score + 1
-    if score >= 5:
-        return "STRONG"
-    elif score >= 3:
-        return "MEDIUM"
     else:
-        return "WEAK"
+        missing.append("special character")
+    if score >= 5:
+        strength = "STRONG"
+    elif score >= 3:
+        strength = "MEDIUM"
+    else:
+        strength = "WEAK"
+    return strength, missing
 
 
 def main():
@@ -99,8 +111,14 @@ def main():
             if password == "":
                 print("Password cannot be empty")
             else:
-                strength = check_password_strength(password)
+                strength, missing = check_password_strength(password)
                 print("Password strength: " + strength)
+                if len(missing) > 0:
+                    print("Missing requirements:")
+                    for item in missing:
+                        print("- " + item)
+                else:
+                    print("All requirements are met")
         else:
             print("Invalid choice please try again")
 
